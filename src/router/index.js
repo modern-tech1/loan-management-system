@@ -1,48 +1,50 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router'
 
-import login from '../views/login.vue';
-import admin from '../views/admin.vue';
-import players from '../views/players.vue';
-import payment from '../views/payment.vue';
-import addnew from '../views/addnew.vue';
+import login from '../views/login.vue'
 
-const routes = [
+import dashboard from '../views/dashboard.vue'
+import customers from '../views/Customers.vue'
+import addcustomers from '../views/addcustomers.vue'
+import loans from '../views/Loans.vue'
+import payments from '../views/payments.vue'
+import logout from '../views/logout.vue'
 
-  {
-    path: '/',
-    redirect: '/login'
-  },
-
-  {
-    path: '/login',
-    component: login
-  },
-
-  {
-    path: '/admin',
-    component: admin
-  },
-
-  {
-    path: '/players',
-    component: players
-  },
-
-  {
-    path: '/payment',
-    component: payment
-  },
-
-  {
-    path: '/addnew',
-    component: addnew
-  }
-
-];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
-});
 
-export default router;
+    history: createWebHistory(),
+
+    routes: [
+        {
+            path: '/login',
+            component :login
+        },
+        {
+            path : '/',
+            component :dashboard
+        },
+        {
+            path:'/customers',
+            component :customers 
+        },
+        {
+            path :'/addcustomers',
+            component :addcustomers
+        },
+        {
+            path:'/loans',
+            component :loans
+        },
+        {
+            path:'/payments',
+            component :payments 
+        },
+        {
+            path:'/logout',
+            component:logout
+        }
+
+    ]
+
+})
+export default router

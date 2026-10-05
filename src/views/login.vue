@@ -1,98 +1,177 @@
+```vue
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-gray-100">
+  <div class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-    <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
+    <!-- LOGIN CARD -->
+    <div
+      class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-gray-200"
+    >
 
-      <h1 class="mb-6 text-center text-3xl font-bold text-blue-600">
-        Admin Login
-      </h1>
+      <!-- LOGO / BRAND -->
+      <div class="text-center mb-8">
 
-      <form @submit.prevent="login">
+        <div
+          class="mx-auto mb-4 w-16 h-16 bg-blue-600 rounded-2xl
+                 flex items-center justify-center shadow-lg"
+        >
+          <span class="text-white text-2xl font-bold">
+            LM
+          </span>
+        </div>
 
-        <!-- Username -->
-        <div class="mb-4">
-          <label class="mb-2 block font-medium">
+        <h1 class="text-2xl font-bold text-gray-800">
+          Loan Management System
+        </h1>
+
+        <p class="text-gray-500 text-sm mt-2">
+          Sign in to access your dashboard
+        </p>
+
+      </div>
+
+
+      <!-- LOGIN FORM -->
+      <form @submit.prevent="submit" class="space-y-5">
+
+        <!-- USERNAME -->
+        <div>
+          <label
+            for="username"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Username
           </label>
 
           <input
-            v-model="username"
+            id="username"
             type="text"
-            placeholder="Enter username"
-            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+            v-model="form.username"
+            placeholder="Enter your username"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                   outline-none transition
+                   focus:ring-2 focus:ring-blue-500
+                   focus:border-blue-500"
           />
         </div>
 
-        <!-- Password -->
-        <div class="mb-6">
-          <label class="mb-2 block font-medium">
+
+        <!-- PASSWORD -->
+        <div>
+          <label
+            for="password"
+            class="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Password
           </label>
 
           <input
-            v-model="password"
+            id="password"
             type="password"
-            placeholder="Enter password"
-            class="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+            v-model="form.password"
+            placeholder="Enter your password"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                   outline-none transition
+                   focus:ring-2 focus:ring-blue-500
+                   focus:border-blue-500"
           />
         </div>
 
-        <!-- Button -->
+
+        <!-- FORGOT PASSWORD -->
+        <div class="flex justify-end">
+          <button
+            type="button"
+            class="text-sm text-blue-600 hover:text-blue-800"
+          >
+            Forgot password?
+          </button>
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
         <button
           type="submit"
-          class="w-full rounded-lg bg-blue-600 py-3 font-bold text-white transition hover:bg-blue-700"
+          class="w-full bg-blue-600 hover:bg-blue-700
+                 text-white font-semibold py-3 rounded-xl
+                 transition duration-200 shadow-md
+                 hover:shadow-lg"
         >
-          Login
+          LOGIN
         </button>
 
       </form>
+
+
+      <!-- FOOTER -->
+      <div class="text-center mt-8">
+
+        <p class="text-xs text-gray-400">
+          © 2026 Loan Management System
+        </p>
+
+        <p class="text-xs text-gray-400 mt-1">
+          Secure business management platform
+        </p>
+
+      </div>
 
     </div>
 
   </div>
 </template>
 
+
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   data() {
     return {
-      username: "",
-      password: ""
+      form: {
+        username: "",
+        password: ""
+      }
     };
   },
 
   methods: {
-    login() {
 
-      axios.post("http://localhost:5000/login", {
-        username: this.username,
-        password: this.password
-      })
-      .then((res) => {
+    async submit() {
 
-        console.log(res.data);
+      try {
 
-        // Save login status
-        localStorage.setItem("isLoggedIn", "true");
-
-        // Go to dashboard
-        this.$router.push("/admin");
-
-      })
-      .catch((error) => {
-
-        console.log(error);
-
-        alert(
-          error.response?.data?.message ||
-          "Login failed"
+        const res = await axios.post(
+          "http://localhost:3000/login",
+          this.form
         );
 
-      });
+        console.log("Login response:", res.data);
+
+        /*
+         * Store token returned by Express
+         */
+        localStorage.setItem("token", res.data.token);
+
+        /*
+         * Redirect to dashboard
+         */
+        this.$router.push("/");
+
+        alert("Login successful");
+
+      } catch (error) {
+
+        console.error("Login error:", error);
+
+        alert("Invalid username or password");
+
+      }
 
     }
+
   }
 };
 </script>
+```

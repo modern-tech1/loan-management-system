@@ -40,5 +40,5 @@
     a{
       text-decoration: auto;
     }
-  </style>
+  </style>  
   
