@@ -70,7 +70,7 @@
 
         <form @submit.prevent="addLoan" class="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
-            <label class="mb-2 block text-sm font-medium">Customer</label>
+            <label class="mb-2 block text-sm font-medium">Customer</label>    A
             <select
               v-model="form.customer_id"
               required

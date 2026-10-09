@@ -5,5 +5,9 @@ export default defineConfig({
   plugins: [
     vue(),
     tailwindcss()
-  ]
+  ],  
+  server:{
+    host:true,
+    port:5173
+  }
 })
